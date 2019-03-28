@@ -6,7 +6,7 @@ export const startLoading = () => {
 };
 
 export const stopLoading = () => {
-  return { type: START_LOADING };
+  return { type: STOP_LOADING };
 };
 
 
