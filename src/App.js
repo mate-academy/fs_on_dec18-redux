@@ -4,17 +4,37 @@ import { connect } from 'react-redux';
 
 
 
-const App = ({ count }) => (
-  <h1>count: {count}</h1>
+const App = ({ count, items, addMe }) => (
+  <div>
+    <button onClick={addMe}>
+      count: {count}
+    </button>
+
+    <pre>
+      {JSON.stringify(items)}
+    </pre>
+  </div>
 );
 
 const mapStateToProps = (state) => ({
   count: state.people.length,
+  items: state.people,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  addMe: () => {
+    dispatch({
+      type: 'ADD_PERSON',
+      person: { id: 1 },
+    })
+  },
 });
 
 
 const ConnectedApp = connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(App);
+
 
 export default ConnectedApp;

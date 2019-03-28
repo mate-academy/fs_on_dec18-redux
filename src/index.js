@@ -16,23 +16,17 @@ const rootReducer = (state, action) => {
         ...state,
         people: [...state.people, action.person],
       };
+
     default:
       return state;
   }
 };
 
-const store = createStore(rootReducer, initialState);
+const store = createStore(
+  rootReducer,
+  initialState,
 
-
-store.dispatch({
-  type: 'ADD_PERSON',
-  person: { id: 1 },
-});
-
-console.log(
-  store.getState()
 );
-
 
 
 
