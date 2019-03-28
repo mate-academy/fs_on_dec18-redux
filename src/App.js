@@ -8,9 +8,13 @@ import { connect } from 'react-redux';
 const App = ({ count, items, addMe, loading }) => (
   <div>
     { loading ? (
-      <h2>Loading...</h2>
+      <h2>
+        Loading...
+        <button>Stop</button>
+      </h2>
     ) : <>
       <button onClick={addMe}>count: {count}</button>
+      <button onClick={addMe}>Start</button>
       <pre>{JSON.stringify(items)}</pre>
     </>}
   </div>
@@ -23,7 +27,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addMe: () => {
+  addMe() {
     dispatch({
       type: 'ADD_PERSON',
       person: { id: 1 },
