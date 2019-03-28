@@ -1,37 +1,46 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
-import App from './App';
 import { Provider } from 'react-redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
-const initialState = {
-  people: [],
-  isLoaded: false,
+import App from './App';
+
+
+const loadingReducer = (loadingState = false, action) => {
+  switch (action.type) {
+    case 'START_LOADING':
+      return true;
+    case 'END_LOADING':
+      return false;
+    default:
+      return loadingState;
+  }
 };
 
-const rootReducer = (state, action) => {
+const peopleReducer = (peopleState = [], action) => {
   switch (action.type) {
     case 'ADD_PERSON':
-      return {
-        ...state,
-        people: [...state.people, action.person],
-      };
-
+      return [
+        ...peopleState,
+        action.person
+      ];
     default:
-      return state;
+      return peopleState;
   }
+};
+
+const rootReducer = (state = {}, action) => {
+  return {
+    people: peopleReducer(state.people, action),
+    loading: loadingReducer(state.loading, action),
+  };
 };
 
 const store = createStore(
   rootReducer,
-  initialState,
-
+  composeWithDevTools(),
 );
-
-
-
-
-
 
 
 ReactDOM.render(

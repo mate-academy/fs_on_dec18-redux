@@ -1,24 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
+
 // const API_URL = 'https://mate-academy.github.io/fe-program/js/tasks/people/people.json';
 
 
 
-const App = ({ count, items, addMe }) => (
+const App = ({ count, items, addMe, loading }) => (
   <div>
-    <button onClick={addMe}>
-      count: {count}
-    </button>
-
-    <pre>
-      {JSON.stringify(items)}
-    </pre>
+    { loading ? (
+      <h2>Loading...</h2>
+    ) : <>
+      <button onClick={addMe}>count: {count}</button>
+      <pre>{JSON.stringify(items)}</pre>
+    </>}
   </div>
 );
 
 const mapStateToProps = (state) => ({
   count: state.people.length,
   items: state.people,
+  loading: state.loading
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -30,7 +31,6 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-
 const ConnectedApp = connect(
   mapStateToProps,
   mapDispatchToProps
@@ -38,3 +38,11 @@ const ConnectedApp = connect(
 
 
 export default ConnectedApp;
+
+// const ConnectedApp1 = (ownProps) => (
+//   <App
+//     {...ownProps}
+//     {...mapState(store.getState()}
+//     {...mapDispatch{store.dispatch}}
+//   />
+// );
