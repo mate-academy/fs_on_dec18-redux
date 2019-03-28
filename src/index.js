@@ -26,6 +26,15 @@ const store = createStore(
   composeWithDevTools(),
 );
 
+const oldDispatch = store.dispatch;
+store.dispatch = (action) => {
+  if (typeof action === 'function') {
+    action(oldDispatch);
+  } else {
+    oldDispatch(action);
+  }
+};
+
 
 ReactDOM.render(
   <Provider store={store}>
