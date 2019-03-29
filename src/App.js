@@ -3,17 +3,10 @@ import { connect } from 'react-redux';
 
 import * as loadingActions from './redux/loading';
 import * as peopleActions from './redux/people';
-const API_URL = 'https://mate-academy.github.io/fe-program/js/tasks/people/people.json';
 
 class App extends React.Component {
-  async componentDidMount() {
-    this.props.startLoading();
-
-    const response = await fetch(API_URL);
-    const people = await response.json();
-
-    loadingActions.stopLoading();
-    this.props.addPeople(people);
+  componentDidMount() {
+    this.loadPeople();
   }
 
   render() {
@@ -40,6 +33,9 @@ const mapState = (state) => ({
 });
 
 const mapDispatch = (dispatch) => ({
+  loadPeople() {
+    peopleActions.loadPeople(dispatch)
+  },
   addMe() {
     dispatch(
       peopleActions.addPerson({ id: 1 })
