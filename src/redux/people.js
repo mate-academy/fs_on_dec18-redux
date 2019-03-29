@@ -19,21 +19,23 @@ export const addPeople = (people = []) => {
 };
 
 
-export const loadPeople = async (dispatch) => {
-  dispatch(
-    loadingActions.startLoading()
-  );
+export const loadPeople = () => {
+  return async (dispatch) => {
+    dispatch(
+      loadingActions.startLoading()
+    );
 
-  const response = await fetch(API_URL);
-  const people = await response.json();
+    const response = await fetch(API_URL);
+    const people = await response.json();
 
-  dispatch(
-    loadingActions.stopLoading()
-  );
+    dispatch(
+      loadingActions.stopLoading()
+    );
 
-  dispatch(
-    addPeople(people)
-  );
+    dispatch(
+      addPeople(people)
+    );
+  };
 };
 
 

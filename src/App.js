@@ -6,7 +6,7 @@ import * as peopleActions from './redux/people';
 
 class App extends React.Component {
   componentDidMount() {
-    this.loadPeople();
+    this.props.loadPeople();
   }
 
   render() {
@@ -18,7 +18,9 @@ class App extends React.Component {
         { loading ? (
           <h2>Loading...</h2>
         ) : <>
-          <button onClick={addMe}>count: {count}</button>
+          <button onClick={() => addMe({ id: 1 })}>
+            count: {count}
+          </button>
           <pre>{JSON.stringify(items)}</pre>
         </>}
       </div>
@@ -32,31 +34,36 @@ const mapState = (state) => ({
   loading: state.loading
 });
 
-const mapDispatch = (dispatch) => ({
-  loadPeople() {
-    peopleActions.loadPeople(dispatch)
-  },
-  addMe() {
-    dispatch(
-      peopleActions.addPerson({ id: 1 })
-    );
-  },
-  addPeople(people) {
-    dispatch(
-      peopleActions.addPeople(people)
-    )
-  },
-  startLoading() {
-    dispatch(
-      loadingActions.startLoading()
-    )
-  },
-  stopLoading() {
-    dispatch(
-      loadingActions.stopLoading()
-    )
-  }
-});
+const mapDispatch = {
+  loadPeople: peopleActions.loadPeople,
+  addMe: peopleActions.addPerson,
+  addPeople: peopleActions.addPeople,
+  startLoading: loadingActions.startLoading,
+  stopLoading: loadingActions.stopLoading,
+};
+
+// const mapDispatch2 = (dispatch) => ({
+//   loadPeople() {
+//     dispatch(
+//       peopleActions.loadPeople()
+//     )
+//   },
+//   addPeople(people) {
+//     dispatch(
+//       peopleActions.addPeople(people)
+//     )
+//   },
+//   startLoading() {
+//     dispatch(
+//       loadingActions.startLoading()
+//     )
+//   },
+//   stopLoading() {
+//     dispatch(
+//       loadingActions.stopLoading()
+//     )
+//   }
+// });
 
 const ConnectedApp = connect(
   mapState,
